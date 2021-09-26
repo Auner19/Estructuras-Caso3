@@ -4,6 +4,8 @@
 #include <iostream>
 #include "listadoble.h"
 
+using namespace std;
+
 
 struct bodega {
     int columnas;
@@ -20,11 +22,11 @@ struct bodega {
         bodegaList.addToBegining(pElement);
     };
 
-    void* pop() {
+    void pop() {
         if (!bodegaList.isEmpty()) {
-            return bodegaList.removeFirst();
+            bodegaList.removeFirst();
         } else {
-            return nullptr;
+            cout << "no hay datos" << endl;
         }
     }
 };
