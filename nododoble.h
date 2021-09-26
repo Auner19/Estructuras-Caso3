@@ -1,16 +1,21 @@
-#ifndef _NODODOBLE_
-#define _NODODOBLE_ 1
+#ifndef _BODEGA_
+#define _BODEGA_ 1
 
 #include <iostream>
 #include "listadoble.h"
 
 using namespace std;
 
-
 struct bodega {
+
     int columnas;
     int paletasXcolumna;
-    int unidadesXpaleta;
+    int unidadesXpaletas;
+    int bodegaId;
+
+    void* data = nullptr;
+    struct bodega* next = nullptr;
+    struct bodega* previous = nullptr;
 
     struct listadoble bodegaList;
 
@@ -22,20 +27,14 @@ struct bodega {
         bodegaList.addToBegining(pElement);
     };
 
-    void pop() {
+    void* pop() {
         if (!bodegaList.isEmpty()) {
-            bodegaList.removeFirst();
+            return bodegaList.removeFirst();
         } else {
-            cout << "no hay datos" << endl;
+            return nullptr;
         }
     }
-};
 
-struct nododoble {
-    struct bodega data;
-    struct nododoble* next = nullptr;
-    struct nododoble* previous = nullptr;
 };
-
 
 #endif
