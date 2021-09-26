@@ -2,6 +2,7 @@
 #define _NODODOBLE_ 1
 
 #include <iostream>
+#include "listadoble.h"
 
 
 struct bodega {
@@ -9,19 +10,19 @@ struct bodega {
     int paletasXcolumna;
     int unidadesXpaleta;
 
-    struct listadoble PilaList;
+    struct listadoble bodegaList;
 
     bool isEmpty() {
-        return PilaList.isEmpty();
+        return bodegaList.isEmpty();
     };
 
     void push(void* pElement) {
-        PilaList.addToBegining(pElement);
+        bodegaList.addToBegining(pElement);
     };
 
     void* pop() {
-        if (!PilaList.isEmpty()) {
-            return PilaList.removeFirst();
+        if (!bodegaList.isEmpty()) {
+            return bodegaList.removeFirst();
         } else {
             return nullptr;
         }
@@ -33,5 +34,6 @@ struct nododoble {
     struct nododoble* next = nullptr;
     struct nododoble* previous = nullptr;
 };
+
 
 #endif

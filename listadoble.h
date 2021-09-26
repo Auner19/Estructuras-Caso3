@@ -50,24 +50,19 @@ struct listadoble {
         size++;
     }
 
-    void* removeFirst() {
-        void* result = nullptr;
+    void removeFirst() {
         struct nododoble* cursor = start;
 
         if (size>1) {
             start->next->previous = nullptr;
             start = start->next;
             cursor->next = nullptr;
-            result = cursor->data;
             size--;
         } else if (size==1) {
             start = nullptr;
             end = nullptr;
-            result = cursor->data;
             size--;
         }
-
-        return result;
     }   
 };
 
