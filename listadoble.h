@@ -1,75 +1,74 @@
 #ifndef _LISTADOBLE_
-#define _LISTADOBLE_ 0
+#define _LISTADOBLE_ 1
 
 #include "nododoble.h"
 
-#define POSITION_BEGINNING 0
-#define POSITION_END 99999999
 
 struct listadoble {
-    int size = 0;
-    nododoble* start = nullptr;
-    nododoble* end = nullptr;
+    struct nododoble* start = nullptr;
+    struct nododoble* end = nullptr;
+    int size =0;
+
 
     bool isEmpty() {
-        return size == 0 ;
+        return size == 0;
     }
 
     int getSize() {
         return size;
     }
 
-    void add(struct bodega pValue) {
-        insert(pValue, POSITION_END);
-    }
-
-    void addAtBeginning(struct bodega pValue) {
-        insert(pValue, POSITION_BEGINNING);
-    }
-
-    int insert(struct bodega* pValue, int pPosition) {
-        int result = 0;
-
-        nododoble* newNodo = (nododoble*)malloc(sizeof(struct nododoble));
-        newNodo->data = *pValue;
+    void addToEnd(struct bodega pData) {
+        struct nododoble* newNode = (struct nododoble*)malloc(sizeof(struct nododoble)); 
+        newNode->data = pData;
 
         if (size==0) {
-            start = newNodo;
-            end = newNodo;
-            newNodo->next = start;
-            newNodo->previous = end;
+            start = newNode;
+            end = newNode;
         } else {
-            if (pPosition==0) {
-                newNodo->next =  start;
-                newNodo->previous = end;
-                start->previous = newNodo;
-                end->next = newNodo;
-                start = newNodo;    
-            } else {
-                int currentPosition = 0;
-                nododoble* cursor = start;
-
-                while (cursor!=end && currentPosition<pPosition) {
-                    cursor = cursor->next;
-                    currentPosition++;
-                }
-
-                newNodo->next = cursor->next;
-                newNodo->previous = cursor;
-                cursor->next = newNodo;
-                if (cursor==end) {
-                    end = newNodo;
-                    start->previous = newNodo;
-                }
-
-            }
+            newNode->previous = end;
+            end->next = newNode;
+            end = newNode;
         }
 
         size++;
-        return result;
     }
 
-};
+    void addToBegining(struct bodega pData) {
+        struct nododoble* newNode = (struct nododoble*)malloc(sizeof(struct nododoble)); 
+        newNode->data = pData;
 
+        if (size==0) {
+            start = newNode;
+            end = newNode;
+        } else {
+            newNode->next = start;
+            start->previous = newNode;
+            start = newNode;
+        }
+
+        size++;
+    }
+
+    void* removeFirst() {
+        void* result = nullptr;
+        struct nododoble* cursor = start;
+
+        if (size>1) {
+            start->next->previous = nullptr;
+            start = start->next;
+            cursor->next = nullptr;
+            result = cursor->data;
+            size--;
+        } else if (size==1) {
+            start = nullptr;
+            end = nullptr;
+            result = cursor->data;
+            size--;
+        }
+
+        return result;
+    }   
+};
 
 #endif

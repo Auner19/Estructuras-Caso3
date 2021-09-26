@@ -1,5 +1,5 @@
-#ifndef _BODEGA_
-#define _BODEGA_ 1
+#ifndef _NODODOBLE_
+#define _NODODOBLE_ 1
 
 #include <iostream>
 
