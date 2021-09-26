@@ -1,4 +1,4 @@
-#include "nododoble.h"
+#include "bodega.h"
 #include "listadoble.h"
 
 #include <iostream>
