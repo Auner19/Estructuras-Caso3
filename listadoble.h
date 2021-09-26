@@ -1,7 +1,7 @@
 #ifndef _LISTADOBLE_
 #define _LISTADOBLE_ 1
 
-#include "nododoble.h"
+#include "bodega.h"
 
 
 struct listadoble {
