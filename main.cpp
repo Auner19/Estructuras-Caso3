@@ -16,14 +16,14 @@ struct bodega release(int pBodegaId) {
         void* top = pilaGeneral.pop();
         struct bodega* topBodega = (struct bodega*)top;
 
-        cout << "saque de la pila de la bodega " << topBodega->bodegaId << endl;;
+        cout << "se sacó de la pila de la bodega " << topBodega->bodegaId << endl;;
         if (topBodega->bodegaId==pBodegaId) {
-            cout << "ya encontré la bodega " << topBodega->bodegaId << endl;;
+            cout << "ya se encontró la bodega " << topBodega->bodegaId << endl;;
             result = *topBodega;
             break;
         } else {
             auxBodega.push(top);
-            cout << "guardo en auxiliar " << ((struct bodega*)top)->bodegaId << endl;;
+            cout << "se guardó en auxiliar " << ((struct bodega*)top)->bodegaId << endl;;
         }
     }
 
@@ -32,7 +32,7 @@ struct bodega release(int pBodegaId) {
 
     while (!auxBodega.isEmpty()) {
         void* top = auxBodega.pop();
-        cout << "re apilando a " << ((struct bodega*)top)->bodegaId << endl;;
+        cout << "Re apilando a " << ((struct bodega*)top)->bodegaId << endl;;
         pilaGeneral.push(top);
     }
 
@@ -43,10 +43,10 @@ struct bodega release(int pBodegaId) {
 
 int main() {
 
-    struct bodega b1 = {5, 3, 5, 01};
-    struct bodega b2 = {6, 4, 6, 02};
-    struct bodega b3 = {7, 5, 7, 03};
-    struct bodega b4 = {8, 6, 8, 04};
+    struct bodega b1 = {5, 3, 5, 1};
+    struct bodega b2 = {6, 4, 6, 2};
+    struct bodega b3 = {7, 5, 7, 3};
+    struct bodega b4 = {8, 6, 8, 4};
 
     pilaGeneral.push(&b1);
     pilaGeneral.push(&b2);
