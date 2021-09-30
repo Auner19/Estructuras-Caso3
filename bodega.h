@@ -2,39 +2,28 @@
 #define _BODEGA_ 1
 
 #include <iostream>
-#include "listadoble.h"
 
 using namespace std;
 
-struct bodega {
+class bodega {
 
-    int columnas;
-    int paletasXcolumna;
-    int unidadesXpaletas;
-    int bodegaId;
+    private:
+        int *arr;
+        int indexTop;
+        int maxSize;
+        int columnas;
+        int paletasXcolumna;
+        int unidadesXpaletas;
+        int bodegaId;
 
-    void* data = nullptr;
-    struct bodega* next = nullptr;
-    struct bodega* previous = nullptr;
-
-    struct listadoble bodegaList;
-
-    bool isEmpty() {
-        return bodegaList.isEmpty();
-    };
-
-    void push(void* pElement) {
-        bodegaList.addToBegining(pElement);
-    };
-
-    void* pop() {
-        if (!bodegaList.isEmpty()) {
-            return bodegaList.removeFirst();
-        } else {
-            return nullptr;
-        }
-    }
-
+    public:
+        bodega(int maxSize = 15);
+        int size() const;
+        bool empty() const;
+        int top() const;
+        void push(int columnas, int paletasXcolumna, int unidadesXpaletas, string producto);
+        void pop();
+        ~bodega();
 };
 
 #endif
