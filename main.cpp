@@ -1,4 +1,5 @@
 #include "bodega.h"
+#include "pedidos.h"
 
 #include <iostream>
 
@@ -49,6 +50,13 @@ int main() {
 
     cout << b1.top() << " " << b1.size() << endl;
     cout << b1.empty() << endl;
+
+
+    pedidos pedidosPendientes[3] ={
+        {.producto = {"Arroz","Pan"},.cantidad= {10,5}, .numeroPedido = 2, .estado = false},
+        {.producto ={"Cerveza","Arroz"},.cantidad={20,10}, .numeroPedido = 5, .estado = false},
+        {.producto = {"Pan","Cerveza"},.cantidad={30,5}, .numeroPedido = 7, .estado = false}
+        };
 
 
     return 0;

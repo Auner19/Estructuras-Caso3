@@ -5,7 +5,7 @@
 
 using namespace std;
 
-struct Pedidos {
+struct pedidos {
 
     string producto[2];
     int cantidad[2];
