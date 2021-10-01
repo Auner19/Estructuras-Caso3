@@ -1,50 +1,52 @@
 #include <iostream>
 #include <string>
 
-#include "pedidos.h"
+#include "pila.h"
+#include "cola.h"
 #include "bodega.h"
-#include "montacargas.h"
+#include "pedidos.h"
 
 using namespace std;
 
-void imprimirInventario(Bodega pInventario[]){
+Stack arrayDeStacks[5];
 
-    cout << "----Inventario de la bodega---- \n" << endl;
+int contador = 0;
 
-    for (int i = 0; i < 3; i++)
+
+
+
+void crearBodega(Bodega pInventario[]){
+
+    for (int indiceArray = 0; indiceArray < 2; indiceArray++)
+    {
+        for (int columna = 0; columna < pInventario[indiceArray].columnas; columna++)
         {
-            cout << "Producto: " << pInventario[i].producto << endl;
-            cout << "Columnas: " << pInventario[i].columnas << endl;
-            cout << "Paletas: " << pInventario[i].paletasXcolumna << endl;
-            cout << "Unidades: " << pInventario[i].unidadesXpaletas << "\n" << endl;      
+            for (int paleta = 0; paleta < pInventario[indiceArray].paletasXcolumna; paleta++)
+            {    
+                arrayDeStacks[contador].push(pInventario[indiceArray].unidadesXpaletas);
+            } 
+        contador++;
+        }   
+    }
+}
+
+void imprimirBodega(){
+
+    for (int indice = 0; indice <5; indice++)
+    {
+        cout << "Indice del Array: " << indice << endl;
+
+        int stackSize = arrayDeStacks[indice].size();
+
+        for (int subindice = 0; subindice < stackSize; subindice++)
+        {
+            arrayDeStacks[indice].top();
+            arrayDeStacks[indice].pop();
         }
-};
+    }   
+}
 
-void imprimirPedidos(Pedidos pPedidos[]){
-
-    cout << "----Pedidos Pendientes---- " << endl;
-    for (int i = 0; i < 3; i++){
-
-    cout << "\nNúmero de pedido: " << pPedidos[i].numeroPedido << endl;
-    cout << "Estado del pedido: " << pPedidos[i].estado << endl;
-    cout << "Productos / Unidades: \n " << endl;
-
-            for (int j = 0; j < 2; j++)
-            {
-            cout << pPedidos[i].producto[j] << " , " << pPedidos[i].cantidad[j] << endl;
-            }
-        }
-};
-
-void imprimirMontacargas(Montacargas pMontacargas){
-
-    cout << "\n----Montacargas---- \n" << endl;
-    cout << "Disponibles: " << pMontacargas.montacargasDisponibles << endl;
-    cout << "Tiempo de trabajo: " << pMontacargas.duracionProceso << "ms" << endl;
-
-};
-
-int main(){
+int main() {
 
     Pedidos pedidosPendientes[3] ={
         {.producto = {"Arroz","Pan"},.cantidad= {10,5}, .numeroPedido = 2, .estado = false},
@@ -52,29 +54,11 @@ int main(){
         {.producto = {"Pan","Cerveza"},.cantidad={30,5}, .numeroPedido = 7, .estado = false}
         };
 
-    Bodega inventario[3] = { 
-        {.columnas=2, .paletasXcolumna=1, .unidadesXpaletas=30, .producto="Arroz"},
-        {.columnas=3, .paletasXcolumna=2, .unidadesXpaletas=40, .producto="Cerveza"},
-        {.columnas=4, .paletasXcolumna=3, .unidadesXpaletas=50, .producto="Pan"}
-        };
+    Bodega inventario[2] = { 
+        {.columnas=2, .paletasXcolumna=5, .unidadesXpaletas=30, .producto="Arroz"},
+        {.columnas=3, .paletasXcolumna=3, .unidadesXpaletas=100, .producto="Cerveza"}};
 
-    Montacargas montacargasActivos;
-
-    montacargasActivos.duracionProceso = 400;
-    montacargasActivos.montacargasDisponibles = 7;
-
-    imprimirInventario(inventario);
-    imprimirPedidos(pedidosPendientes);
-    imprimirMontacargas(montacargasActivos);
-
-    return 0;
+    crearBodega(inventario);
+    imprimirBodega();
 }
-
-
-
-
-
-
-
-
 

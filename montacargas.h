@@ -1,8 +1,11 @@
 #include <iostream>
+#include "cola.h"
 
 using namespace std;
 
 struct Montacargas {
-    int montacargasDisponibles;
-    int duracionProceso;
+
+    Queue colaMontacarga;
+    int id;
+
 };
