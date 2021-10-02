@@ -1,3 +1,6 @@
+#ifndef _PEDIDOS_
+#define _PEDIDOS_
+
 #include <iostream>
 
 using namespace std;
@@ -8,4 +11,6 @@ struct Pedidos {
     int cantidad[2];
     int numeroPedido;
     bool estado;
-};
+}; 
+
+#endif

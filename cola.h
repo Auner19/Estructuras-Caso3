@@ -1,14 +1,15 @@
+#ifndef _QUEUE_
+#define _QUEUE_
+
 #include <iostream>
+#include "pedidos.h"
 using namespace std;
 
 class Node{
-
     private:
         Node *next;
         Node *prev;
-        Queue colaMontacargas;
-
-        int id;
+        Pedidos pedido;
         friend class Queue;
 };
 
@@ -17,8 +18,8 @@ class Queue{
     public:
 
     Queue(int tm =100);
-    const int &front();
-    void enqueue(const int & dt);
+    const Pedidos &front();
+    void enqueue(const Pedidos & dt);
     void dequeue();
     bool empty() const;
     int size() const;
@@ -55,18 +56,19 @@ Queue::~Queue(){
 
     delete header;
     delete trailer;
-
 }
-const int & Queue::front(){
 
-    return header->next->id;
+
+const Pedidos & Queue::front(){
+
+    return header->next->pedido;
 }
-void Queue::enqueue(const int & dt){
+void Queue::enqueue(const Pedidos & dt){
 
     if(tam<tamMax){
 
         Node *nd = new Node;
-        nd->id = dt;
+        nd->pedido = dt;
         nd->next = trailer;
         nd->prev= trailer->prev;
 
@@ -92,12 +94,6 @@ bool Queue::empty() const{
 int Queue::size() const{
     return(tam);
 }
-void Queue::printFoward(){
-    Node *nd = header->next;
 
-    while(nd != trailer){
-        cout << nd->id << " ";
-        nd = nd->next;
-    }
-}
+#endif
 
