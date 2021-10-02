@@ -1,136 +1,130 @@
+#include <iostream>
+#include <string>
+#include "cstdlib"
+
+#include "pila.h"
+#include "cola.h"
 #include "bodega.h"
 #include "pedidos.h"
-#include "cola.h"
-
-#include <iostream>
+#include "montacargas.h"
 
 using namespace std;
 
+Stack arrayDeStacks[5];
 
-bodega::bodega(int max){
-    indexTop = -1;
-    maxSize = max;
-    arr = new int[max];
-}
+void crearBodega(Bodega pInventario[]){
 
-int bodega::size() const{
-    return indexTop +1;
-}
+    int contador = 0;
 
-bool bodega::empty() const{
-    return(indexTop == -1);
-}
-
-int bodega::top() const{
-    return arr[indexTop];
-}
-
-void bodega::push(int columnas, int paletasXcolumna, int unidadesXpaletas, string producto){
-    if(indexTop +1 < maxSize)
-        arr[++indexTop] = columnas, paletasXcolumna, unidadesXpaletas, producto;
-}
-
-void bodega::pop(){
-    if(!empty())
-        indexTop--;
-}
-
-bodega::~bodega(){
-    delete []arr;
-}
-
-cola::cola(int tm){
-    header = new Node;
-    trailer = new Node;
-    header->next = trailer;
-    trailer->prev = header;
-    header->prev = NULL;
-    trailer->next = NULL;
-
-    tam = 0;
-    tamMax = tm;
-}
-
-cola::~cola(){
-    while(!empty())
-        dequeue();
-
-    delete header;
-    delete trailer;
-}
-
-const pedidos & cola::front(){
-    return header->next->SuPedido;
-}
-
-void cola::enqueue(const pedidos & dt){
-    if(tam < tamMax){
-        Node *nd = new Node;
-        nd->SuPedido = dt;
-        nd->next = trailer;
-        nd->prev = trailer->prev;
-
-        trailer->prev->next = nd;
-        trailer->prev = nd;
-        tam++;
+    for (int indiceArray = 0; indiceArray < 2; indiceArray++)
+    {
+        for (int columna = 0; columna < pInventario[indiceArray].columnas; columna++)
+        {
+            for (int paleta = 0; paleta < pInventario[indiceArray].paletasXcolumna; paleta++)
+            {    
+                arrayDeStacks[contador].push(pInventario[indiceArray].unidadesXpaletas);
+            }
+        arrayDeStacks[contador].producto = pInventario[indiceArray].producto;
+        contador++;
+        }   
     }
 }
 
-void cola::dequeue(){
-    if(!empty()){
-        Node *nd = header->next->next;
+void imprimirBodega(){
 
-        delete header->next;
-        header->next = nd;
-        nd->prev = header;
-
-        tam--;
-    }
+    for (int indice = 0; indice <5; indice++)
+    {
+        cout << arrayDeStacks[indice].size() << endl;
+    }   
 }
 
-bool cola::empty() const{
-    return(tam == 0);
+void crearMontacargas(int cantidadPedidos, int cantidadMontacargas, Montacargas arrayMontacargas[],Pedidos pPendientes[]){
+
+    int indicePedido = 0;
+    int indiceMontacarga = 0;
+
+        while (indicePedido < cantidadPedidos)
+        {
+            if(indiceMontacarga==cantidadMontacargas){
+                indiceMontacarga = 0;
+            }
+            arrayMontacargas[indiceMontacarga].colaMontacarga.enqueue(pPendientes[indicePedido]);
+            indicePedido++;
+            indiceMontacarga++;
+        }
 }
 
-int cola::size() const{
-    return tam;
+void verMontacargas(int sizeArreglo , Montacargas arrayMontacargas[]){
+    for (int i = 0; i < sizeArreglo; i++)
+    {
+        cout << arrayMontacargas[i].colaMontacarga.size() << endl;
+
+        }
 }
 
+void completarPedidos(Montacargas pArray[], Bodega pInventario[], int sizeArrayMontacargas, int sizeArrayStacks){
 
-int main() {
+    for (int indiceMontacargas = 0; indiceMontacargas < sizeArrayMontacargas; indiceMontacargas++) 
+    {
+        while(!pArray[indiceMontacargas].colaMontacarga.empty()) 
+        {
+            int cantidadProducto = pArray[indiceMontacargas].colaMontacarga.front().cantidad; 
 
-    bodega b1(4);
-    b1.push(8, 2, 6, "arroz");
-    b1.push(10, 4, 4, "cerveza");
-    b1.push(8, 6, 5, "cereal");
-    b1.push(6, 5, 2, "avena");
-    b1.pop();
+            while (cantidadProducto > 0) 
+            {
+                for ( int i = 0; i < sizeArrayStacks; i++) 
+                {
+                    if (arrayDeStacks[i].producto == pArray[indiceMontacargas].colaMontacarga.front().producto && cantidadProducto!= 0)
+                        {
+                            while(cantidadProducto>0)
+                            {
+                                cantidadProducto -= arrayDeStacks[i].top();
+                                arrayDeStacks[i].pop(); 
+                            }
+                        }
+                }
+            }
+            pArray[indiceMontacargas].colaMontacarga.dequeue(); 
+         }
+    }          
+}
+int main(){
 
-    cout << b1.top() << " " << b1.size() << endl;
-    cout << b1.empty() << endl;
+    Pedidos pedidosPendientes[2]; 
 
+    pedidosPendientes[0].cantidad = 90;
+    pedidosPendientes[0].producto = "Arroz";
+    pedidosPendientes[0].numeroPedido = 10;
+    pedidosPendientes[0].estado = false;
 
-    pedidos pedidosPendientes[3] ={
-        {.producto = {"Arroz","Pan"},.cantidad= {10,5}, .numeroPedido = 2, .estado = false},
-        {.producto ={"Cerveza","Arroz"},.cantidad={20,10}, .numeroPedido = 5, .estado = false},
-        {.producto = {"Pan","Cerveza"},.cantidad={30,5}, .numeroPedido = 7, .estado = false}
-        };
+    pedidosPendientes[1].cantidad = 50;
+    pedidosPendientes[1].producto = "Cerveza";
+    pedidosPendientes[1].numeroPedido = 5;
+    pedidosPendientes[1].estado = false;
 
+    Bodega inventario[2];
 
-    cola c1(3);
-    c1.enqueue(pedidosPendientes[0]);
-    c1.enqueue(pedidosPendientes[1]);
-    c1.enqueue(pedidosPendientes[2]);
-    c1.dequeue();
+    inventario[0].columnas = 2;
+    inventario[0].paletasXcolumna = 5;
+    inventario[0].unidadesXpaletas = 30;
+    inventario[0].producto = "Arroz";
 
-    cout << c1.size() << endl;
+    inventario[1].columnas = 3;
+    inventario[1].paletasXcolumna = 3;
+    inventario[1].unidadesXpaletas = 25;
+    inventario[1].producto = "Cerveza";
+        
 
+    Montacargas montacargasActivos[2];
 
+    crearBodega(inventario);
+    crearMontacargas(2,2,montacargasActivos,pedidosPendientes);
+    imprimirBodega();
+    completarPedidos(montacargasActivos,inventario,2,5);
 
+    cout << "------------------" << endl;
 
-
-    return 0;
-
+    imprimirBodega();
 }
 
 

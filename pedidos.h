@@ -1,17 +1,16 @@
 #ifndef _PEDIDOS_
-#define _PEDIDOS_ 1
+#define _PEDIDOS_
 
 #include <iostream>
 
 using namespace std;
 
-struct pedidos {
+struct Pedidos {
 
-    string producto[2];
-    int cantidad[2];
+    string producto;
+    int cantidad;
     int numeroPedido;
     bool estado;
-};
-
+}; 
 
 #endif
