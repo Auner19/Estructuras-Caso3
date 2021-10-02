@@ -12,16 +12,16 @@ class Stack {
         int columnas;
         int paletasXcolumna;
         int unidadesXpaletas;
-        int StackId;
-
+    
     public:
         Stack(int maxSize = 15);
         int size() const;
         bool empty() const;
-        void top() const;
+        int top() const;
         void push(int unidadesXpaletas);
         void pop();
         ~Stack();
+        string producto;
 };
 
 Stack::Stack(int max){
@@ -38,8 +38,8 @@ bool Stack::empty() const{
     return(indexTop == -1);
 }
 
-void Stack::top() const{
-    cout << arr[indexTop] << endl;
+int Stack::top() const{
+    return arr[indexTop];
 }
 
 void Stack::push(int unidadesXpaletas){

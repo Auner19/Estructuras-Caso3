@@ -7,8 +7,8 @@ using namespace std;
 
 struct Pedidos {
 
-    string producto[2];
-    int cantidad[2];
+    string producto;
+    int cantidad;
     int numeroPedido;
     bool estado;
 }; 

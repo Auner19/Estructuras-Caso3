@@ -6,6 +6,5 @@ using namespace std;
 struct Montacargas {
 
     Queue colaMontacarga;
-    int id;
-
+    
 };
