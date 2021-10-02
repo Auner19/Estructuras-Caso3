@@ -34,7 +34,7 @@ void imprimirBodega(){
 
     for (int indice = 0; indice <5; indice++)
     {
-        cout << "Producto: " << arrayDeStacks[indice].producto << "," << arrayDeStacks[indice].size() << endl;
+        cout << arrayDeStacks[indice].size() << endl;
     }   
 }
 
@@ -58,34 +58,36 @@ void verMontacargas(int sizeArreglo , Montacargas arrayMontacargas[]){
     for (int i = 0; i < sizeArreglo; i++)
     {
         cout << arrayMontacargas[i].colaMontacarga.size() << endl;
+
         }
 }
 
 void completarPedidos(Montacargas pArray[], Bodega pInventario[], int sizeArrayMontacargas, int sizeArrayStacks){
 
-    for (int indiceMontacargas = 0; indiceMontacargas < sizeArrayMontacargas; indiceMontacargas++)
+    for (int indiceMontacargas = 0; indiceMontacargas < sizeArrayMontacargas; indiceMontacargas++) 
     {
-        while(!pArray[indiceMontacargas].colaMontacarga.empty())
+        while(!pArray[indiceMontacargas].colaMontacarga.empty()) 
         {
-            int cantidadProducto = pArray[indiceMontacargas].colaMontacarga.front().cantidad; //90
+            int cantidadProducto = pArray[indiceMontacargas].colaMontacarga.front().cantidad; 
 
-            while (cantidadProducto != 0)
+            while (cantidadProducto > 0) 
             {
-                for ( int i = 0; i < sizeArrayStacks; i++)
+                for ( int i = 0; i < sizeArrayStacks; i++) 
                 {
-                    if (arrayDeStacks[i].producto == pArray[indiceMontacargas].colaMontacarga.front().producto && cantidadProducto > 0)
-                    {
-                        cantidadProducto -= arrayDeStacks[i].top();
-                        arrayDeStacks[i].pop();
-                    }
+                    if (arrayDeStacks[i].producto == pArray[indiceMontacargas].colaMontacarga.front().producto && cantidadProducto!= 0)
+                        {
+                            while(cantidadProducto>0)
+                            {
+                                cantidadProducto -= arrayDeStacks[i].top();
+                                arrayDeStacks[i].pop(); 
+                            }
+                        }
                 }
             }
-            pArray[indiceMontacargas].colaMontacarga.dequeue();
+            pArray[indiceMontacargas].colaMontacarga.dequeue(); 
          }
     }          
 }
-
-
 int main(){
 
     Pedidos pedidosPendientes[2]; 
@@ -119,8 +121,8 @@ int main(){
     crearMontacargas(2,2,montacargasActivos,pedidosPendientes);
     imprimirBodega();
     completarPedidos(montacargasActivos,inventario,2,5);
-    //verMontacargas(2,montacargasActivos);
-    cout << "-------" << endl;
-    imprimirBodega();
 
+    cout << "------------------" << endl;
+
+    imprimirBodega();
 }
