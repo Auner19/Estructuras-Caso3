@@ -26,15 +26,14 @@ class Queue{
     void printFoward();
     ~Queue();
 
-    void pedidoCompleto();
-    
-
     private:
         Node *header;
         Node *trailer;
         int tam;
         int tamMax;
 };
+
+//Funciones
 
 Queue::Queue(int tm){
 
@@ -69,7 +68,7 @@ const Pedidos & Queue::front(){
 
 void Queue::enqueue(const Pedidos & dt){
 
-    if(tam<tamMax){
+    if(tam < tamMax){
 
         Node *nd = new Node;
         nd->pedido = dt;
@@ -93,7 +92,7 @@ void Queue::dequeue(){
     }
 }
 bool Queue::empty() const{
-    return(tam==0);
+    return(tam == 0);
 }
 int Queue::size() const{
     return(tam);

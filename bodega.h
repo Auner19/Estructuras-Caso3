@@ -3,7 +3,7 @@
 using namespace std;
 
 struct Bodega {
-    
+
     int columnas;
     int paletasXcolumna;
     int unidadesXpaletas;
