@@ -8,5 +8,6 @@ struct Bodega {
     int paletasXcolumna;
     int unidadesXpaletas;
     string producto;
+    int total;
 
 };

@@ -25,6 +25,8 @@ class Queue{
     int size() const;
     void printFoward();
     ~Queue();
+
+    void pedidoCompleto();
     
 
     private:
@@ -63,6 +65,8 @@ const Pedidos & Queue::front(){
 
     return header->next->pedido;
 }
+
+
 void Queue::enqueue(const Pedidos & dt){
 
     if(tam<tamMax){
