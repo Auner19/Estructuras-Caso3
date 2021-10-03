@@ -12,88 +12,68 @@ using namespace std;
 
 Stack arrayDeStacks[10];
 
-void crearBodega(Bodega pInventario[], int sizeInventario){
-
+void crearBodega(Bodega pInventario[], int pSizeInventario){
     int contador = 0;
-
-    for (int indiceArray = 0; indiceArray < sizeInventario; indiceArray++)
-    {
-        for (int columna = 0; columna < pInventario[indiceArray].columnas; columna++)
-        {
-            for (int paleta = 0; paleta < pInventario[indiceArray].paletasXcolumna; paleta++)
-            {    
+    for (int indiceArray = 0; indiceArray < pSizeInventario; indiceArray++){
+        for (int columna = 0; columna < pInventario[indiceArray].columnas; columna++){
+            for (int paleta = 0; paleta < pInventario[indiceArray].paletasXcolumna; paleta++){    
                 arrayDeStacks[contador].push(pInventario[indiceArray].unidadesXpaletas);
             }
-        arrayDeStacks[contador].producto = pInventario[indiceArray].producto;
-        contador++;
+         arrayDeStacks[contador].producto = pInventario[indiceArray].producto;
+         contador++;
         }   
     }
 }
 
 void imprimirBodega(){
-
-    for (int indice = 0; indice <10; indice++)
-    {
+    for (int indice = 0; indice <10; indice++){
         cout << arrayDeStacks[indice].size() << endl;
     }   
 }
 
-void crearMontacargas(int cantidadPedidos, int cantidadMontacargas, Montacargas arrayMontacargas[],Pedidos pPendientes[]){
-
+void crearMontacargas(int pCantidadPedidos, int pCantidadMontacargas, Montacargas pArrayMontacargas[], Pedidos pPendientes[]){
     int indicePedido = 0;
     int indiceMontacarga = 0;
-
-        while (indicePedido < cantidadPedidos)
-        {
-            if(indiceMontacarga==cantidadMontacargas){
-                indiceMontacarga = 0;
-            }
-            arrayMontacargas[indiceMontacarga].colaMontacarga.enqueue(pPendientes[indicePedido]);
-            indicePedido++;
-            indiceMontacarga++;
+    while (indicePedido < pCantidadPedidos){
+        if(indiceMontacarga == pCantidadMontacargas){
+            indiceMontacarga = 0;
         }
-}
-
-void verMontacargas(int sizeArreglo , Montacargas arrayMontacargas[]){
-    for (int i = 0; i < sizeArreglo; i++)
-    {
-        cout << arrayMontacargas[i].colaMontacarga.size() << endl;
+        pArrayMontacargas[indiceMontacarga].colaMontacarga.enqueue(pPendientes[indicePedido]);
+        indicePedido++;
+        indiceMontacarga++;
     }
 }
 
-void completarPedidos(Montacargas pArray[], Bodega pInventario[], int sizeArrayMontacargas, int sizeArrayStacks){
+void verMontacargas(int pSizeArreglo , Montacargas pArrayMontacargas[]){
+    for (int indice = 0; indice < pSizeArreglo; indice++){
+        cout << pArrayMontacargas[indice].colaMontacarga.size() << endl;
+    }
+}
 
-    for (int indiceMontacargas = 0; indiceMontacargas < sizeArrayMontacargas; indiceMontacargas++) 
-    {
-        while(!pArray[indiceMontacargas].colaMontacarga.empty()) 
-        {
+void completarPedidos(Montacargas pArray[], Bodega pInventario[], int pSizeArrayMontacargas, int pSizeArrayStacks){
+    for (int indiceMontacargas = 0; indiceMontacargas < pSizeArrayMontacargas; indiceMontacargas++) {
+        while(!pArray[indiceMontacargas].colaMontacarga.empty()) {
             int cantidadProducto = pArray[indiceMontacargas].colaMontacarga.front().cantidad; 
-
-                for ( int i = 0; i < sizeArrayStacks; i++) 
-                {
-                    if (arrayDeStacks[i].producto == pArray[indiceMontacargas].colaMontacarga.front().producto && cantidadProducto!= 0)
-                        {
-                            while(cantidadProducto>0 && !arrayDeStacks[i].empty())
-                            {
-                                cantidadProducto -= arrayDeStacks[i].top();
-                                arrayDeStacks[i].pop();
-
-                                if (cantidadProducto < 0){
-                                    arrayDeStacks[i].push(cantidadProducto*-1);
-                                }
+            for (int indice = 0; indice < pSizeArrayStacks; indice++){
+                    if (arrayDeStacks[indice].producto == pArray[indiceMontacargas].colaMontacarga.front().producto && cantidadProducto!= 0){
+                        while(cantidadProducto>0 && !arrayDeStacks[indice].empty()){
+                            cantidadProducto -= arrayDeStacks[indice].top();
+                            arrayDeStacks[indice].pop();
+                         if (cantidadProducto < 0){
+                             arrayDeStacks[indice].push(cantidadProducto*-1);
                             }
                         }
-                } 
+                    }
+            }
             if (cantidadProducto <= 0){
-                    pArray[indiceMontacargas].colaMontacarga.front().estado = true;
-                    cout << "Estado del pedido " << pArray[indiceMontacargas].colaMontacarga.front().numeroPedido <<": "<< pArray[indiceMontacargas].colaMontacarga.front().estado << endl;
-                }
+                pArray[indiceMontacargas].colaMontacarga.front().estado = true;
+                cout << "Estado del pedido " << pArray[indiceMontacargas].colaMontacarga.front().numeroPedido <<": "<< pArray[indiceMontacargas].colaMontacarga.front().estado << endl;
+            }
             else{
                 cout << "Estado del pedido " << pArray[indiceMontacargas].colaMontacarga.front().numeroPedido <<": "<< pArray[indiceMontacargas].colaMontacarga.front().estado << endl;
-                
-                }
+            }
             pArray[indiceMontacargas].colaMontacarga.dequeue(); 
-         }
+        }
     }          
 }
 
@@ -133,20 +113,15 @@ int main(){
     inventario[2].unidadesXpaletas = 25; 
     inventario[2].producto = "Manzanas";
         
-
     Montacargas montacargasActivos[2];
 
     crearBodega(inventario,3);
-
-    imprimirBodega();
-
-    cout << "----------------" << endl;
+    //imprimirBodega();
+    //cout << "----------------" << endl;
 
     crearMontacargas(3,2,montacargasActivos,pedidosPendientes);
-    
-    verMontacargas(2,montacargasActivos);
-
-    cout << "----------------" << endl;
+    //verMontacargas(2,montacargasActivos);
+    //cout << "----------------" << endl;
 
     completarPedidos(montacargasActivos, inventario,2,10);
 

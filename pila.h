@@ -43,13 +43,15 @@ int Stack::top() const{
 }
 
 void Stack::push(int unidadesXpaletas){
-    if(indexTop +1 < maxSize)
+    if(indexTop +1 < maxSize){
         arr[++indexTop] = unidadesXpaletas;
+    }
 }
 
 void Stack::pop(){
-    if(!empty())
+    if(!empty()){ 
         indexTop--;
+    }
 }
 
 Stack::~Stack(){

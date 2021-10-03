@@ -32,7 +32,7 @@ class Queue{
     private:
         Node *header;
         Node *trailer;
-        int tam;
+        int tamaño;
         int tamMax;
 };
 
@@ -47,7 +47,7 @@ Queue::Queue(int tm){
     trailer->next = NULL;
     header->prev= NULL;
 
-    tam = 0;
+    tamaño = 0;
     tamMax = tm;
 
 }
@@ -69,7 +69,7 @@ const Pedidos & Queue::front(){
 
 void Queue::enqueue(const Pedidos & dt){
 
-    if(tam<tamMax){
+    if(tamaño < tamMax){
 
         Node *nd = new Node;
         nd->pedido = dt;
@@ -78,7 +78,7 @@ void Queue::enqueue(const Pedidos & dt){
 
         trailer->prev->next = nd;
         trailer->prev = nd;
-        tam++;
+        tamaño++;
     }
 }
 void Queue::dequeue(){
@@ -89,14 +89,14 @@ void Queue::dequeue(){
         delete header->next;
         header->next = nd;
         nd->prev = header;
-        tam--;
+        tamaño--;
     }
 }
 bool Queue::empty() const{
-    return(tam==0);
+    return(tamaño == 0);
 }
 int Queue::size() const{
-    return(tam);
+    return(tamaño);
 }
 
 #endif
