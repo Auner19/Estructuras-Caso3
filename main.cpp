@@ -82,6 +82,8 @@ void completarPedidos(Montacargas pArray[], Bodega pInventario[], int sizeArrayM
                                 arrayDeStacks[i].pop(); 
                             }
                         }
+                    pArray[i].colaMontacarga.front().estado = true;
+                    
                 }
             }
             pArray[indiceMontacargas].colaMontacarga.dequeue(); 

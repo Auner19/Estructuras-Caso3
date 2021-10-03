@@ -10,7 +10,7 @@ struct Pedidos {
     string producto;
     int cantidad;
     int numeroPedido;
-    bool estado;
+    mutable bool estado;
 }; 
 
 #endif

@@ -26,7 +26,6 @@ class Queue{
     void printFoward();
     ~Queue();
     
-
     private:
         Node *header;
         Node *trailer;
