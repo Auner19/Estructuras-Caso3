@@ -11,6 +11,7 @@ struct Pedidos {
     int cantidad;
     int numeroPedido;
     mutable bool estado;
+    
 }; 
 
 #endif
