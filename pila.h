@@ -8,11 +8,7 @@ class Stack {
         int *arr;
         int indexTop;
         int maxSize;
-        
-        int columnas;
-        int paletasXcolumna;
-        int unidadesXpaletas;
-    
+
     public:
         Stack(int maxSize = 15);
         int size() const;

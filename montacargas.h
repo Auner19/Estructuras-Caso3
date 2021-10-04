@@ -3,7 +3,7 @@
 
 using namespace std;
 
-struct Montacargas {
+struct Montacargas { 
 
     Queue colaMontacarga;
 };

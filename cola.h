@@ -17,25 +17,24 @@ class Queue{
 
     public:
 
-    Queue(int tm =100);
+    Queue(int maxSizeQueue =100);
     const Pedidos &front();
-    void enqueue(const Pedidos & dt);
+    void enqueue(const Pedidos & pPedido);
     void dequeue();
     bool empty() const;
     int size() const;
-    void printFoward();
     ~Queue();
 
     private:
         Node *header;
         Node *trailer;
-        int tam;
+        int tamActual;
         int tamMax;
 };
 
 //Funciones
 
-Queue::Queue(int tm){
+Queue::Queue(int maxSizeQueue){
 
     header = new Node;
     trailer = new Node;
@@ -46,8 +45,8 @@ Queue::Queue(int tm){
     trailer->next = NULL;
     header->prev= NULL;
 
-    tam = 0;
-    tamMax = tm;
+    tamActual = 0;
+    tamMax = maxSizeQueue;
 
 }
 Queue::~Queue(){
@@ -65,19 +64,18 @@ const Pedidos & Queue::front(){
     return header->next->pedido;
 }
 
+void Queue::enqueue(const Pedidos & pPedido){
 
-void Queue::enqueue(const Pedidos & dt){
-
-    if(tam < tamMax){
+    if(tamActual < tamMax){
 
         Node *nd = new Node;
-        nd->pedido = dt;
+        nd->pedido = pPedido;
         nd->next = trailer;
         nd->prev= trailer->prev;
 
         trailer->prev->next = nd;
         trailer->prev = nd;
-        tam++;
+        tamActual++;
     }
 }
 void Queue::dequeue(){
@@ -88,14 +86,14 @@ void Queue::dequeue(){
         delete header->next;
         header->next = nd;
         nd->prev = header;
-        tam--;
+        tamActual--;
     }
 }
 bool Queue::empty() const{
-    return(tam == 0);
+    return(tamActual == 0);
 }
 int Queue::size() const{
-    return(tam);
+    return(tamActual);
 }
 
 #endif

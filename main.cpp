@@ -12,6 +12,10 @@ using namespace std;
 
 Stack arrayDeStacks[10]; //Se crea el array de pilas
 
+int duracionProceso = 400;
+int cantidadMontacargas;
+int cantidadPedidos;
+
 void crearBodega(Bodega pInventario[], int pSizeInventario){ // Se crea la bodega mendiante el push
     int contador = 0;
     for (int indiceArray = 0; indiceArray < pSizeInventario; indiceArray++){
@@ -55,6 +59,7 @@ void verMontacargas(int pSizeArreglo , Montacargas pArrayMontacargas[]){ //Impri
 //Completa los pedidos
 void completarPedidos(Montacargas pArrayMontacargas[], int pSizeArrayMontacargas, int pSizeArrayStacks){
     for (int indiceMontacargas = 0; indiceMontacargas < pSizeArrayMontacargas; indiceMontacargas++) {
+        int tiempoTotal = 0;
         while(!pArrayMontacargas[indiceMontacargas].colaMontacarga.empty()) {
             int cantidadProducto = pArrayMontacargas[indiceMontacargas].colaMontacarga.front().cantidad; 
             for (int indice = 0; indice < pSizeArrayStacks; indice++){
@@ -62,18 +67,23 @@ void completarPedidos(Montacargas pArrayMontacargas[], int pSizeArrayMontacargas
                         while(cantidadProducto>0 && !arrayDeStacks[indice].empty()){
                             cantidadProducto -= arrayDeStacks[indice].top();
                             arrayDeStacks[indice].pop();
+                            tiempoTotal += duracionProceso;
                          if (cantidadProducto < 0){
                              arrayDeStacks[indice].push(cantidadProducto*-1);
+                             tiempoTotal += duracionProceso;
                             }
                         }
                     }
             }
             if (cantidadProducto <= 0){
                 pArrayMontacargas[indiceMontacargas].colaMontacarga.front().estado = true;
-                cout << "Estado del pedido " << pArrayMontacargas[indiceMontacargas].colaMontacarga.front().numeroPedido <<": "<< pArrayMontacargas[indiceMontacargas].colaMontacarga.front().estado << endl;
+                cout << "Estado del pedido " << pArrayMontacargas[indiceMontacargas].colaMontacarga.front().numeroPedido 
+                << ": "<< pArrayMontacargas[indiceMontacargas].colaMontacarga.front().estado << " / Duracion pedido: " 
+                << tiempoTotal << " milisegundos" << endl;
             }
             else{
-                cout << "Estado del pedido " << pArrayMontacargas[indiceMontacargas].colaMontacarga.front().numeroPedido <<": "<< pArrayMontacargas[indiceMontacargas].colaMontacarga.front().estado << endl;
+                cout << "Estado del pedido " << pArrayMontacargas[indiceMontacargas].colaMontacarga.front().numeroPedido 
+                <<": "<< pArrayMontacargas[indiceMontacargas].colaMontacarga.front().estado << endl;
             }
             pArrayMontacargas[indiceMontacargas].colaMontacarga.dequeue(); 
         }
